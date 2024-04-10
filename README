@@ -1,0 +1,5 @@
+requires SDL2
+
+build with ``make``, clean with ``make clean``
+
+run ``plasma`` for a cool classic plasma fractal effect
