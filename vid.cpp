@@ -84,7 +84,10 @@ void SDLVideoDriver::CyclePalette()
 
 void SDLVideoDriver::ColorsToSurface(uint8_t *pixels)
 {
-    uint8_t *dest = (pixels);
+    uint8_t *dest = pixels;
+    int x = 130, y = 30;
+    int sp = y * 800 + x;
+    dest += sp;
 
     for(int fy = 0; fy < real_size; ++fy) {
         for(int fx = 0; fx < real_size; ++fx) {
