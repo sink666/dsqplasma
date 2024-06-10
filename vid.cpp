@@ -1,5 +1,4 @@
 #include "vid.h"
-#include "dsq.h"
 
 SDL_Surface *renderSurface;
 SDL_Surface *rgbaSurface;
@@ -82,26 +81,12 @@ void SDLVideoDriver::CyclePalette()
     SDL_SetPaletteColors(renderSurface->format->palette, colors, 0, 47);
 }
 
-void SDLVideoDriver::ColorsToSurface(uint8_t *pixels)
+SDL_Surface *SDLVideoDriver::getRenderSurface()
 {
-    uint8_t *dest = pixels;
-    int x = 130, y = 30;
-    int sp = y * 800 + x;
-    dest += sp;
-
-    for(int fy = 0; fy < real_size; ++fy) {
-        for(int fx = 0; fx < real_size; ++fx) {
-            *dest = field[fx][fy];
-            dest += 1;
-        }
-        dest += (800 - real_size);
-    }
+    return renderSurface;
 }
 
-void SDLVideoDriver::HeightmapToRenderer()
+SDL_Color *SDLVideoDriver::getColors()
 {
-    SDL_LockSurface(renderSurface);
-    uint8_t *rsurf_px = static_cast<uint8_t *>(renderSurface->pixels);
-    ColorsToSurface(rsurf_px);
-    SDL_UnlockSurface(renderSurface);
+    return colors;
 }

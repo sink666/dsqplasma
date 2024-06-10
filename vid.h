@@ -5,11 +5,12 @@ class SDLVideoDriver
     SDL_Window *window = nullptr;
     
 public:
+    SDLVideoDriver(){};
+
     void InitGraphics(int winw, int winh);
     void RenderFrame();
     void KillGraphics();
-    // effect-specific stuff
     void CyclePalette();
-    void ColorsToSurface(uint8_t *pixels);
-    void HeightmapToRenderer();
+    SDL_Surface *getRenderSurface();
+    SDL_Color *getColors();
 };

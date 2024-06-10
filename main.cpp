@@ -1,39 +1,65 @@
 #include "vid.h"
 #include "dsq.h"
 
-int main() 
+class Env
 {
-    SDL_Event ev;
     SDLVideoDriver vd;
-    Heightmap_DSQ hmp(0, 46);
+    Heightmap_DSQ hmp;
 
-    if((SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER)) == -1) 
-        return -1;
-
-    vd.InitGraphics(800, 600);
-
-    hmp.Seed_Corners();
-    hmp.Make_Heightmap(1.333);
-
-    vd.HeightmapToRenderer();
-
-    while(1) 
+public:
+    Env(){};
+    void startup()
     {
-        if(SDL_PollEvent(&ev)) 
-        {
-            if((ev.key.keysym.scancode == SDL_SCANCODE_ESCAPE) || 
-               (ev.key.keysym.scancode == SDL_SCANCODE_Q) ||
-               (ev.type == SDL_QUIT)) {
-                break;
-            }
-        }
-
-        vd.CyclePalette();
-        vd.RenderFrame();
-        SDL_Delay(30);
+        vd.InitGraphics(800, 600);
+        hmp.InitRandom(0, 46);
     }
 
-    vd.KillGraphics();
+    bool run()
+    {
+        SDL_Event ev;
+        if((SDL_Init(SDL_INIT_VIDEO|SDL_INIT_TIMER)) == -1) 
+            return -1;
 
-    return 0;
+        hmp.SeedCorners();
+        hmp.MakeHeightmap(1.333);
+        
+        hmp.HeightmapToRenderer(vd.getRenderSurface(), vd.getColors());
+
+        while(1) 
+        {
+            if(SDL_PollEvent(&ev)) 
+            {
+                if((ev.key.keysym.scancode == SDL_SCANCODE_ESCAPE) || 
+                (ev.key.keysym.scancode == SDL_SCANCODE_Q) ||
+                (ev.type == SDL_QUIT)) {
+                    break;
+                }
+            }
+
+            vd.CyclePalette();
+            vd.RenderFrame();
+            SDL_Delay(30);
+        }
+
+        return 0;
+    }
+
+    void shutdown()
+    {
+        vd.KillGraphics();
+    }
+};
+
+int main() 
+{
+    Env plaz;
+
+    plaz.startup();
+
+    bool effresult;
+    effresult = plaz.run();
+
+    plaz.shutdown();
+
+    return effresult;
 }
