@@ -109,10 +109,9 @@ void Heightmap_DSQ::MakeHeightmap(double vh)
 
 void Heightmap_DSQ::HeightmapToRenderer(SDL_Surface *renderSurface, SDL_Color *colors)
 {
-    SDL_Surface *heightmap = SDL_CreateRGBSurfaceWithFormatFrom(&field, 513, 513, 
-                                                                8, 513, SDL_PIXELFORMAT_INDEX8);
+    SDL_Surface *heightmap = SDL_CreateRGBSurfaceWithFormatFrom(&field, 513, 513, 8, 513, SDL_PIXELFORMAT_INDEX8);
 
-    SDL_SetPaletteColors( heightmap->format->palette, colors, 0, 47);
+    SDL_SetPaletteColors(heightmap->format->palette, colors, 0, 47);
     SDL_BlitSurface(heightmap, nullptr, renderSurface, &targetRect);
     SDL_FreeSurface(heightmap);
 }

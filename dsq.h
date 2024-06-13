@@ -2,8 +2,6 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 
-#define arrlen(a) (sizeof(a) / sizeof(*a))
-
 class Heightmap_DSQ
 {
     int rndmin;
